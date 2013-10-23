@@ -55,16 +55,15 @@ module GitCafe
       end
 
 
-      # desc "Delete a repository."
-      # params do
-      #   requires :repo_name, :type => String
-      #   requires :path, :type => String
-      # end
-      # delete '/' do 
-      #   Dir.chdir('/Users/loveltyoic/gitcafe') do
-      #     FileUtils.rm_rf("#{params[:path]}/#{params[:repo_name]}")
-      #   end
-      # end
+      desc "Delete a repository."
+      params do
+        requires :repo_name, :type => String
+        requires :path, :type => String
+      end
+      delete '/' do 
+        repo = GitCafe::Repo.new(params[:path], params[:repo_name], false)
+        repo.destroy
+      end
 
     end
 

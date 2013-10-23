@@ -89,6 +89,25 @@ module GitCafe
         }
       }
     end
+
+    def destroy
+      Dir.chdir('/Users/loveltyoic/gitcafe') do
+        if File.exist?(@path) 
+          FileUtils.rm_rf(@path)
+        elsif File.exist?(@path+'.git')
+          @path += '.git'
+          FileUtils.rm_rf(@path)
+        else
+          return {
+            result: false, 
+            message: 'Repo not exists!'
+          }
+        end
+      end
+      {
+        result: true
+      }
+    end
   
   end
 end
