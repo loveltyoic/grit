@@ -4,6 +4,7 @@ require 'goliath'
 require 'grape'
 require './app/gitcafe/git_api'
 require './app/gitcafe/repo'
+require './app/gitcafe/commit'
 
 class Server < Goliath::API
 
