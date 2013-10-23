@@ -18,7 +18,7 @@ module GitCafe
       end
     end
 
-    def show
+    def index
       commits = []
       @repo.commits.each do |commit|
         commits << {
@@ -35,6 +35,25 @@ module GitCafe
       {
         result: true,
         data: commits
+      }
+    end
+
+    def show(id)
+      commit = @repo.commit(id)
+      tree = commit.tree
+      contents = tree.contents
+      blobs = []
+      contents.each do |blob|
+        blobs << {
+          blob: blob.id,
+          name: blob.name,
+          size: blob.size,
+          content: blob.data
+        }
+      end
+      {
+        result: true,
+        data: blobs
       }
     end
 

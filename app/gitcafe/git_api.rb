@@ -15,9 +15,20 @@ module GitCafe
       end
       get '/' do
         commits = GitCafe::Commit.new(params[:path], params[:repo_name])
-        commits.show
+        commits.index
       end
-      
+
+      desc 'Show a commit'
+      params do
+        requires :path, :type => String
+        requires :repo_name, :type => String
+        requires :id, :type => String
+      end
+      get '/:path/:repo_name' do
+        commits = GitCafe::Commit.new(params[:path], params[:repo_name])
+        commits.show(params[:id])
+      end
+
     end
 
     resource :repos do
