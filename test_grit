@@ -1,25 +1,39 @@
 #! /bin/bash
 api_host=localhost:9000/v1
-# Create a new repo
+echo Create a new repo
 curl -X POST -d "path=test&repo_name=test_repo&bare=false" $api_host/repos/
-# Show a repo.
+echo 
+echo Show a repo.
 curl -X GET -d "path=test&repo_name=test_repo" $api_host/repos/
+echo 
 
-cd ~/gitcafe/test/test_repo
-touch readme
-git add .
-git commit -m 'add readme'
-git br feature
-id=$(git show | grep commit)
-# Show all branches.
-curl -X GET -d "path=test&repo_name=test_repo" $api_host/v1/repos/branches
-# List commits
+cd ~/gitcafe/test/test_repo >> null
+touch readme >> null
+git add . >> null
+git commit -m 'add readme' >> null
+git br feature >> null
+commit=$(git show | grep commit) >> null
+id=${commit#commit} >> null
+
+echo Show all branches.
+curl -X GET -d "path=test&repo_name=test_repo" $api_host/repos/branches
+echo 
+
+echo List commits
 curl -X GET -d "path=test&repo_name=test_repo&branch=master" $api_host/commits
-# Show commit info
-curl -X GET -d "id=${id#commit}" $api_host/commits/test/test_repo
-# Fork a repo
+echo 
+
+echo Show commit info
+curl $api_host/commits/test/test_repo?id=$(echo $id)
+echo 
+
+echo Fork a repo
 curl -X POST -d "fork_path=fork" $api_host/repos/test/test_repo/fork_bare
-# Delete a repo
+echo 
+
+echo Delete a repo
 curl -X DELETE -d "path=test&repo_name=test_repo" $api_host/repos/
-# 清理工作
+echo 
+
+echo 清理工作
 rm -rf ~/gitcafe/fork/test_repo.git
