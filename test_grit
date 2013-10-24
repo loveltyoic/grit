@@ -7,7 +7,7 @@ echo Show a repo.
 curl -X GET -d "path=test&repo_name=test_repo" $api_host/repos/
 echo 
 
-cd ~/gitcafe/test/test_repo >> null
+cd ~/gitcafe/test/test_repo
 touch readme >> null
 git add . >> null
 git commit -m 'add readme' >> null
