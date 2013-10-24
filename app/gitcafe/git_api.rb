@@ -41,8 +41,7 @@ module GitCafe
         requires :bare, :type => Boolean
       end
       post '/' do
-        repo = GitCafe::Repo.new(params[:path], params[:repo_name], params[:bare])
-        repo.create
+        repo = GitCafe::Repo.create(params[:path], params[:repo_name], params[:bare])
       end
 
       desc 'Show a repository.'
@@ -51,8 +50,18 @@ module GitCafe
         requires :path, :type => String
       end
       get '/' do
-        repo = GitCafe::Repo.new(params[:path], params[:repo_name], false)
+        repo = GitCafe::Repo.new(params[:path], params[:repo_name])
         repo.show
+      end
+
+      desc 'Show all branches of a repository.'
+      params do 
+        requires :repo_name, :type => String
+        requires :path, :type => String
+      end
+      get '/branches' do 
+        repo = GitCafe::Repo.new(params[:path], params[:repo_name])
+        repo.branches
       end
 
       desc 'Fork a repository.'
@@ -62,7 +71,7 @@ module GitCafe
         requires :fork_path, :type => String
       end
       post '/:path/:repo_name/fork_bare' do
-        repo = GitCafe::Repo.new(params[:path], params[:repo_name], true)
+        repo = GitCafe::Repo.new(params[:path], params[:repo_name])
         repo.fork(params[:fork_path])
       end
 
@@ -73,7 +82,7 @@ module GitCafe
         requires :path, :type => String
       end
       delete '/' do 
-        repo = GitCafe::Repo.new(params[:path], params[:repo_name], false)
+        repo = GitCafe::Repo.new(params[:path], params[:repo_name])
         repo.destroy
       end
 
