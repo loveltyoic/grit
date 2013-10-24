@@ -18,9 +18,9 @@ module GitCafe
       end
     end
 
-    def index
+    def index(branch)
       commits = []
-      @repo.commits.each do |commit|
+      @repo.commits(branch).each do |commit|
         commits << {
           id: commit.id,
           parents: commit.parents,
@@ -34,7 +34,10 @@ module GitCafe
       end
       {
         result: true,
-        data: commits
+        data: {
+          branch: branch,
+          commits: commits
+        }
       }
     end
 

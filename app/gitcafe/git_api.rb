@@ -8,14 +8,15 @@ module GitCafe
     git_root_path = '/Users/loveltyoic/gitcafe'
 
     resource :commits do
-      desc 'List all commits.'
+      desc 'List all commits of a branch'
       params do
         requires :path, :type => String
         requires :repo_name, :type => String
+        requires :branch, :type => String
       end
       get '/' do
         commits = GitCafe::Commit.new(params[:path], params[:repo_name])
-        commits.index
+        commits.index(params[:branch])
       end
 
       desc 'Show a commit'
