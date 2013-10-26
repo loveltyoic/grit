@@ -30,6 +30,18 @@ module GitCafe
         commits.show(params[:id])
       end
 
+      desc 'The commit diff for the given commit.'
+      params do 
+      requires :path, :type => String
+        requires :repo_name, :type => String
+        requires :id, :type => String
+      end
+      get '/:path/:repo_name/:id/diff' do
+        commits = GitCafe::Commit.new(params[:path], params[:repo_name])
+        commits.diff(params[:id])
+      end
+
+
     end
 
     resource :repos do

@@ -27,6 +27,10 @@ echo Show commit info
 curl $api_host/commits/test/test_repo?id=$(echo $id)
 echo 
 
+echo The commit
+curl -v $api_host/commits/test/test_repo/$(echo $id)/diff
+echo
+
 echo Fork a repo
 curl -X POST -d "fork_path=fork" $api_host/repos/test/test_repo/fork_bare
 echo 

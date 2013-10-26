@@ -10,7 +10,6 @@ GEM
     addressable (2.3.5)
     async-rack (0.5.1)
       rack (~> 1.1)
-    atomic (1.1.14)
     axiom-types (0.0.5)
       descendants_tracker (~> 0.0.1)
       ice_nine (~> 0.9)

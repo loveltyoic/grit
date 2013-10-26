@@ -60,5 +60,13 @@ module GitCafe
       }
     end
 
+    def diff(id)
+      commit_diff = @repo.commit_diff(id)
+      {
+        result: true,
+        data: commit_diff
+      }
+    end
+
   end
 end
